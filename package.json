@@ -1,0 +1,27 @@
+{
+  "name": "simple-cloud-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barend-erasmus/simple-cloud-storage.git"
+  },
+  "author": "Barend Erasmus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/barend-erasmus/simple-cloud-storage/issues"
+  },
+  "homepage": "https://github.com/barend-erasmus/simple-cloud-storage#readme",
+  "devDependencies": {
+    "@types/node": "^8.0.28"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "yargs": "^9.0.1"
+  }
+}
