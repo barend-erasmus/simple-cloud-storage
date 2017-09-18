@@ -16,6 +16,14 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const options = {
+    inflate: true,
+    limit: '100kb',
+    type: 'application/octet-stream'
+};
+
+app.use(bodyParser.raw(options));
+
 // app.get('/roles', requireUser, RolesRouter.index);
 
 app.listen(argv.port || 3000, () => {

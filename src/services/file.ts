@@ -1,18 +1,21 @@
+// Imports
+import { IGateway } from './../gateways/gateway';
+
 export class FileService {
 
-    constructor() {
+    constructor(private gateway: IGateway) {
 
     }
 
-    public startSession(): Promise<string> {
+    public startSession(fileName: string, fileSize: number): Promise<string> {
         return null;
     }
 
-    public append(): Promise<void> {
+    public append(sessionId: string, buffer: Buffer): Promise<void> {
         return null;
     }
 
-    public endSession(): Promise<void> {
+    public endSession(sessionId: string): Promise<void> {
         return null;
     }
 }
