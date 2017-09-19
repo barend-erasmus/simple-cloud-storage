@@ -1,7 +1,7 @@
-// Imports Interfaces
+// Imports interfaces
 import { IFileRepository } from './../file';
 
-// Imports Models
+// Imports models
 import { File } from './../../entities/file';
 
 export class FileRepository implements IFileRepository {

@@ -3,7 +3,7 @@ import * as crypto from 'crypto';
 import { IGateway } from './../gateways/gateway';
 import { IFileRepository } from './../repositories/file';
 
-// Imports Models
+// Imports models
 import { File } from './../entities/file';
 
 export class FileService {

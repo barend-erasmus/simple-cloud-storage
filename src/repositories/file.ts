@@ -1,4 +1,4 @@
-// Imports Models
+// Imports models
 import { File } from './../entities/file';
 
 export interface IFileRepository {

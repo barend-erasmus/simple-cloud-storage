@@ -2,7 +2,7 @@
 import * as express from 'express';
 import * as yargs from 'yargs';
 
-// Import Repositories
+// Import repositories
 
 // Imports middleware
 import * as bodyParser from 'body-parser';
