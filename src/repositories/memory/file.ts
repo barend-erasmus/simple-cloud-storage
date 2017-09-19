@@ -3,24 +3,21 @@ import { File } from './../../entities/file';
 
 export class FileRepository {
 
-    private static files: File[] = [];
+    private files: File[] = [];
 
 
     public async create(file: File): Promise<boolean> {
-        FileRepository.files.push(file);
-
-        console.log(FileRepository.files);
+        this.files.push(file);
         
         return true;
     }
 
     public async findBySessionId(sessionId: string): Promise<File> {
-        console.log(FileRepository.files);
-        return FileRepository.files.find((x) => x.sessionId === sessionId);
+        return this.files.find((x) => x.sessionId === sessionId);
     }
 
     public async findByFileName(fileName: string, profileId: string): Promise<File> {
-        return null;
+        return this.files.find((x) => x.fileName === fileName && x.profileId === profileId);
     }
 
     public async findByChecksum(checksum: string, profileId: string): Promise<File> {
@@ -28,11 +25,10 @@ export class FileRepository {
     }
 
     public async update(file: File): Promise<boolean> {
-        const existingFile: File = FileRepository.files.find((x) => x.sessionId === file.sessionId);
+        const existingFile: File = this.files.find((x) => x.sessionId === file.sessionId);
 
         existingFile.checksum = file.checksum;
 
-        console.log(FileRepository.files);
         return true;
     }
 }

@@ -14,7 +14,13 @@ export class FileService {
 
     public async startSession(fileName: string, fileSize: number, profileId: string): Promise<string> {
 
-        const sessionId: string = crypto.randomBytes(64).toString('hex');
+        const existingFile: File = await this.fileRepository.findByFileName(fileName, profileId);
+
+        if (existingFile && existingFile.checksum && existingFile.offset === existingFile.fileSize) {
+            throw new Error('File already exist');
+        }
+
+        const sessionId: string = crypto.randomBytes(32).toString('hex');
 
         const file: File = new File(fileName, fileSize, 0, sessionId, profileId, new Date(), null);
 
@@ -26,6 +32,18 @@ export class FileService {
     public async append(sessionId: string, buffer: Buffer): Promise<void> {
 
         const file: File = await this.fileRepository.findBySessionId(sessionId);
+
+        if (!file) {
+            throw new Error('Invalid SessionId');
+        }
+
+        if (file.offset >= file.fileSize) {
+            throw new Error('FileSize Exceeded');
+        }
+
+        if (file.offset + buffer.length > file.fileSize) {
+            throw new Error('FileSize Exceeded');
+        }
 
         await this.gateway.append(`./storage/${file.profileId}/${file.fileName}`, file.offset, buffer);
 
