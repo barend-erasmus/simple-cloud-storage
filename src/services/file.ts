@@ -1,4 +1,5 @@
 // Imports
+import * as Stream from 'stream';
 import * as crypto from 'crypto';
 import { IGateway } from './../gateways/gateway';
 import { IFileRepository } from './../repositories/file';
@@ -16,8 +17,18 @@ export class FileService {
 
         const existingFile: File = await this.fileRepository.findByFileName(fileName, profileId);
 
-        if (existingFile && existingFile.checksum && existingFile.offset === existingFile.fileSize) {
-            throw new Error('File already exist');
+        if (existingFile) {
+
+            existingFile.checksum = null;
+            existingFile.createdTimestamp = null;
+            existingFile.fileSize = fileSize;
+            existingFile.offset = 0;
+
+            await this.fileRepository.update(existingFile);
+
+            await this.gateway.delete(`./storage/${existingFile.profileId}/${existingFile.fileName}`);
+
+            return existingFile.sessionId;
         }
 
         const sessionId: string = crypto.randomBytes(32).toString('hex');
@@ -67,5 +78,16 @@ export class FileService {
 
     public async list(profileId: string): Promise<File[]> {
         return this.fileRepository.list(profileId);
+    }
+
+    public async download(fileName: string, profileId: string): Promise<Stream> {
+
+        const file: File = await this.fileRepository.findByFileName(fileName, profileId);
+
+        if (!file) {
+            throw new Error('File does not exist');
+        }
+
+        return this.gateway.getStream(`./storage/${file.profileId}/${file.fileName}`);
     }
 }

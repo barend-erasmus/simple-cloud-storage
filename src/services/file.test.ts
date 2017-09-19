@@ -22,36 +22,19 @@ describe('FileService', () => {
             expect(sessionId).to.be.not.null;
         });
 
-        it('should return session id given file with open session already exist', async () => {
+        it('should return existing session id given file already exist', async () => {
             const fileRepository: FileRepository = new FileRepository();
             fileService = new FileService(new MemoryGateway(), fileRepository);
 
-            let sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
+            const sessionId1: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
             const buffer = Buffer.from('Hello World', 'utf8');
-            await fileService.appendSession(sessionId, buffer);
+            await fileService.appendSession(sessionId1, buffer);
 
-            sessionId = await fileService.startSession('hello-world.txt', 11, 'profileId');
+            const sessionId2: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
-            expect(sessionId).to.be.not.null;
-        });
-
-        it('should throw exception given file with closed session already exist', async () => {
-            const fileRepository: FileRepository = new FileRepository();
-            fileService = new FileService(new MemoryGateway(), fileRepository);
-
-            const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
-
-            const buffer = Buffer.from('Hello World', 'utf8');
-            await fileService.appendSession(sessionId, buffer);
-            await fileService.endSession(sessionId);
-
-            try {
-                await fileService.startSession('hello-world.txt', 11, 'profileId');
-                throw new Error('Expected Error');
-            } catch (error) {
-                expect(error.message).to.be.eq('File already exist');
-            }
+            expect(sessionId2).to.be.not.null;
+            expect(sessionId2).to.be.eq(sessionId1);
         });
     });
 

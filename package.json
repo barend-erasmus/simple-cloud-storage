@@ -28,7 +28,7 @@
     "@types/mocha": "^2.2.42",
     "@types/node": "^8.0.24",
     "@types/passport": "^0.3.3",
-    "@types/sequelize": "^4.0.69",
+    "@types/sequelize": "^4.0.73",
     "chai": "^4.1.1",
     "mocha": "^3.5.0"
   },
@@ -36,6 +36,9 @@
     "body-parser": "^1.18.1",
     "express": "^4.15.4",
     "fs-extra": "^4.0.2",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.8.4",
     "yargs": "^9.0.1"
   }
 }

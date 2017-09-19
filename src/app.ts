@@ -17,18 +17,17 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const options = {
+app.use(bodyParser.raw({
     inflate: true,
     limit: '100kb',
     type: 'application/octet-stream',
-};
-
-app.use(bodyParser.raw(options));
+}));
 
 app.post('/files/start', FilesRouter.start);
 app.post('/files/append', FilesRouter.append);
 app.post('/files/finish', FilesRouter.finish);
-app.post('/files/list', FilesRouter.list);
+app.get('/files/list', FilesRouter.list);
+app.get('/files/download', FilesRouter.download);
 
 app.listen(argv.port || 3000, () => {
     console.log(`listening on port ${argv.port || 3000}`);

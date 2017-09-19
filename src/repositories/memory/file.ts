@@ -23,12 +23,13 @@ export class FileRepository implements IFileRepository {
     }
 
     public async findByChecksum(checksum: string, profileId: string): Promise<File> {
-        return null;
+        return this.files.find((x) => x.checksum === checksum && x.profileId === profileId);
     }
 
     public async update(file: File): Promise<boolean> {
         const existingFile: File = this.files.find((x) => x.sessionId === file.sessionId);
 
+        existingFile.offset = file.offset;
         existingFile.checksum = file.checksum;
         existingFile.createdTimestamp = file.createdTimestamp;
 
