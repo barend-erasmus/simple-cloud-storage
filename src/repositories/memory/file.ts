@@ -27,6 +27,7 @@ export class FileRepository {
         const existingFile: File = this.files.find((x) => x.sessionId === file.sessionId);
 
         existingFile.checksum = file.checksum;
+        existingFile.createdTimestamp = file.createdTimestamp;
 
         return true;
     }

@@ -55,7 +55,12 @@ export class FileService {
     public async endSession(sessionId: string): Promise<void> {
         const file: File = await this.fileRepository.findBySessionId(sessionId);
 
+        if (!file) {
+            throw new Error('Invalid SessionId');
+        }
+
         file.checksum = await this.gateway.computeHash(`./storage/${file.profileId}/${file.fileName}`);
+        file.createdTimestamp = new Date();
 
         await this.fileRepository.update(file);
     }
