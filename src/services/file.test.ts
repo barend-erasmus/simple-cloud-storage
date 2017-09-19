@@ -40,7 +40,6 @@ describe('FileService', () => {
             const fileRepository: FileRepository = new FileRepository();
             fileService = new FileService(new MemoryGateway(), fileRepository);
 
-
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
             const buffer = Buffer.from('Hello World', 'utf8');
@@ -55,7 +54,6 @@ describe('FileService', () => {
             }
         });
     });
-
 
     describe('append', () => {
         it('should return', async () => {
@@ -72,7 +70,6 @@ describe('FileService', () => {
             const fileRepository: FileRepository = new FileRepository();
             fileService = new FileService(new MemoryGateway(), fileRepository);
 
-
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
             try {
@@ -85,11 +82,9 @@ describe('FileService', () => {
             }
         });
 
-
         it('should throw exception given fileSize exceeded', async () => {
             const fileRepository: FileRepository = new FileRepository();
             fileService = new FileService(new MemoryGateway(), fileRepository);
-
 
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 

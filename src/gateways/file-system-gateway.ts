@@ -19,11 +19,11 @@ export class FileSystemGateway implements IGateway {
             const hash = crypto.createHash('md5');
             const stream = fs.createReadStream(fileName);
 
-            stream.on('data', function (data) {
+            stream.on('data', (data: Buffer) => {
                 hash.update(data, 'utf8');
-            })
+            });
 
-            stream.on('end', function () {
+            stream.on('end', () => {
                 const result: string = hash.digest('hex');
                 resolve(result);
             });
@@ -34,7 +34,7 @@ export class FileSystemGateway implements IGateway {
         return new Promise<void>((resolve, reject) => {
             const fileStream = fs.createWriteStream(fileName, {
                 flags: 'a',
-                start: offset
+                start: offset,
             });
 
             fileStream.write(buffer, () => {

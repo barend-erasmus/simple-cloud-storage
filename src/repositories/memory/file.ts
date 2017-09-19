@@ -5,10 +5,9 @@ export class FileRepository {
 
     private files: File[] = [];
 
-
     public async create(file: File): Promise<boolean> {
         this.files.push(file);
-        
+
         return true;
     }
 
