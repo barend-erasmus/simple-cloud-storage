@@ -8,4 +8,6 @@ export interface IFileRepository {
     findByChecksum(checksum: string, profileId: string): Promise<File>;
     update(file: File): Promise<boolean>;
     list(profileId: string): Promise<File[]>;
+    deleteFile(fileName: string, profileId: string): Promise<boolean>;
+    deleteProfile(profileId: string): Promise<boolean>;
 }

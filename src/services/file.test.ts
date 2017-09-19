@@ -15,7 +15,7 @@ describe('FileService', () => {
     describe('startSession', () => {
         it('should return session id', async () => {
             const fileRepository: FileRepository = new FileRepository();
-            fileService = new FileService(new MemoryGateway(), fileRepository);
+            fileService = new FileService(new MemoryGateway(), fileRepository, null);
 
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
@@ -24,7 +24,7 @@ describe('FileService', () => {
 
         it('should return existing session id given file already exist', async () => {
             const fileRepository: FileRepository = new FileRepository();
-            fileService = new FileService(new MemoryGateway(), fileRepository);
+            fileService = new FileService(new MemoryGateway(), fileRepository, null);
 
             const sessionId1: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
@@ -41,7 +41,7 @@ describe('FileService', () => {
     describe('appendSession', () => {
         it('should return', async () => {
             const fileRepository: FileRepository = new FileRepository();
-            fileService = new FileService(new MemoryGateway(), fileRepository);
+            fileService = new FileService(new MemoryGateway(), fileRepository, null);
 
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
@@ -51,7 +51,7 @@ describe('FileService', () => {
 
         it('should throw exception given buffer exceeds FileSize', async () => {
             const fileRepository: FileRepository = new FileRepository();
-            fileService = new FileService(new MemoryGateway(), fileRepository);
+            fileService = new FileService(new MemoryGateway(), fileRepository, null);
 
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
@@ -67,7 +67,7 @@ describe('FileService', () => {
 
         it('should throw exception given fileSize exceeded', async () => {
             const fileRepository: FileRepository = new FileRepository();
-            fileService = new FileService(new MemoryGateway(), fileRepository);
+            fileService = new FileService(new MemoryGateway(), fileRepository, null);
 
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
@@ -85,7 +85,7 @@ describe('FileService', () => {
 
         it('should throw exception given invalid sessionId', async () => {
             const fileRepository: FileRepository = new FileRepository();
-            fileService = new FileService(new MemoryGateway(), fileRepository);
+            fileService = new FileService(new MemoryGateway(), fileRepository, null);
 
             try {
                 const buffer = Buffer.from('Hello World', 'utf8');

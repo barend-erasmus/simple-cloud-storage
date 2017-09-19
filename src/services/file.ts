@@ -91,6 +91,23 @@ export class FileService {
         return this.gateway.getStream(this.buildFileNamePath(file));
     }
 
+    public async deleteProfile(profileId: string): Promise<void> {
+        await this.fileRepository.deleteProfile(profileId);
+        await this.gateway.delete(`${this.basePath}/${profileId}`);
+    }
+
+    public async deleteFile(fileName: string, profileId: string): Promise<void> {
+
+        const file: File = await this.fileRepository.findByFileName(fileName, profileId);
+
+        if (!file) {
+            throw new Error('File does not exist');
+        }
+
+        await this.fileRepository.deleteFile(fileName, profileId);
+        await this.gateway.delete(`${this.basePath}/${profileId}/${fileName}`);
+    }
+
     private buildFileNamePath(file: File): string {
         return `${this.basePath}/${file.profileId}/${file.fileName}`;
     }

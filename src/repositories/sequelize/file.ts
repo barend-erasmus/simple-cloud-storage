@@ -98,4 +98,25 @@ export class FileRepository extends BaseRepository implements IFileRepository {
 
         return files.map((x) => new File(x.fileName, x.fileSize, x.offset, x.sessionId, x.profileId, x.createdTimestamp, x.checksum));
     }
+
+    public async deleteFile(fileName: string, profileId: string): Promise<boolean> {
+        await BaseRepository.models.File.destroy({
+            where: {
+                fileName,
+                profileId,
+            },
+        });
+
+        return true;
+    }
+
+    public async deleteProfile(profileId: string): Promise<boolean> {
+        await BaseRepository.models.File.destroy({
+            where: {
+                profileId,
+            },
+        });
+
+        return true;
+    }
 }

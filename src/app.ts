@@ -28,6 +28,8 @@ app.post('/files/append', FilesRouter.append);
 app.post('/files/finish', FilesRouter.finish);
 app.get('/files/list', FilesRouter.list);
 app.get('/files/download', FilesRouter.download);
+app.get('/files/deleteProfile', FilesRouter.deleteProfile);
+app.get('/files/deleteFile', FilesRouter.deleteFile);
 
 app.listen(argv.port || 3000, () => {
     console.log(`listening on port ${argv.port || 3000}`);

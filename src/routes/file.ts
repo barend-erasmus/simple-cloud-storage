@@ -84,7 +84,33 @@ export class FilesRouter {
         }
     }
 
+    public static async deleteProfile(req: express.Request, res: express.Response) {
+
+        try {
+            const fileService: FileService = FilesRouter.getFileService();
+
+            await fileService.deleteProfile(req.query.profileId);
+
+            res.json(true);
+        } catch (err) {
+            res.json(err.message);
+        }
+    }
+
+    public static async deleteFile(req: express.Request, res: express.Response) {
+
+        try {
+            const fileService: FileService = FilesRouter.getFileService();
+
+            await fileService.deleteFile(req.query.fileName, req.query.profileId);
+
+            res.json(true);
+        } catch (err) {
+            res.json(err.message);
+        }
+    }
+
     private static getFileService(): FileService {
-        return new FileService(new FileSystemGateway(), new FileRepository('developersworkspace.co.za', 'simple-cloud-storage', '1wF1cJ0m5j4ldBPdVuWs'), argv.prod? '/var/simple-cloud-storage' : './storage');
+        return new FileService(new FileSystemGateway(), new FileRepository('developersworkspace.co.za', 'simple-cloud-storage', '1wF1cJ0m5j4ldBPdVuWs'), argv.prod ? '/var/simple-cloud-storage' : './storage');
     }
 }

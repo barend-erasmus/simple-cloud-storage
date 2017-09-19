@@ -17,7 +17,7 @@ export class FileSystemGateway implements IGateway {
 
     public async delete(fileName: string): Promise<void> {
         if (fs.existsSync(fileName)) {
-            fs.unlinkSync(fileName);
+            await fs.remove(fileName);
         }
     }
 

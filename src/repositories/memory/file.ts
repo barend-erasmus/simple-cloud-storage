@@ -39,4 +39,12 @@ export class FileRepository implements IFileRepository {
     public async list(profileId: string): Promise<File[]> {
         return this.files.filter((x) => x.profileId === profileId && x.createdTimestamp !== null);
     }
+
+    public async deleteFile(fileName: string, profileId: string): Promise<boolean> {
+        return true;
+    }
+
+    public async deleteProfile(profileId: string): Promise<boolean> {
+        return true;
+    }
 }
