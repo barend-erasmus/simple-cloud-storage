@@ -2,6 +2,7 @@
 import * as express from 'express';
 import * as path from 'path';
 import * as Stream from 'stream';
+import * as yargs from 'yargs';
 import { FileSystemGateway } from './../gateways/file-system-gateway';
 
 // Imports repositories
@@ -12,6 +13,8 @@ import { FileService } from './../services/file';
 
 // Imports models
 import { File } from './../entities/file';
+
+const argv = yargs.argv;
 
 export class FilesRouter {
 
@@ -82,6 +85,6 @@ export class FilesRouter {
     }
 
     private static getFileService(): FileService {
-        return new FileService(new FileSystemGateway(), new FileRepository('developersworkspace.co.za', 'simple-cloud-storage', '1wF1cJ0m5j4ldBPdVuWs'));
+        return new FileService(new FileSystemGateway(), new FileRepository('developersworkspace.co.za', 'simple-cloud-storage', '1wF1cJ0m5j4ldBPdVuWs'), argv.prod? '/var/simple-cloud-storage' : './storage');
     }
 }

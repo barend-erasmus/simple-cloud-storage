@@ -23,10 +23,6 @@
             "destination": "/opt/simple-cloud-storage/src"
         },
         {
-            "source": "$workspace/apidoc",
-            "destination": "/opt/simple-cloud-storage/apidoc"
-        },
-        {
             "source": "$workspace/coverage",
             "destination": "/opt/simple-cloud-storage/coverage"
         }

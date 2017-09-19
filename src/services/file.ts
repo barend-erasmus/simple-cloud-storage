@@ -9,7 +9,7 @@ import { File } from './../entities/file';
 
 export class FileService {
 
-    constructor(private gateway: IGateway, private fileRepository: IFileRepository) {
+    constructor(private gateway: IGateway, private fileRepository: IFileRepository, private basePath: string) {
 
     }
 
@@ -92,6 +92,6 @@ export class FileService {
     }
 
     private buildFileNamePath(file: File): string {
-        return `./storage/${file.profileId}/${file.fileName}`;
+        return `${this.basePath}/${file.profileId}/${file.fileName}`;
     }
 }
