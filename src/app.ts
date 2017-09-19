@@ -25,9 +25,10 @@ const options = {
 
 app.use(bodyParser.raw(options));
 
-app.post('/files/create', FilesRouter.create);
+app.post('/files/start', FilesRouter.start);
 app.post('/files/append', FilesRouter.append);
 app.post('/files/finish', FilesRouter.finish);
+app.post('/files/list', FilesRouter.list);
 
 app.listen(argv.port || 3000, () => {
     console.log(`listening on port ${argv.port || 3000}`);

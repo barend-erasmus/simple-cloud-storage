@@ -8,9 +8,12 @@ import { FileRepository } from './../repositories/memory/file';
 // Imports services
 import { FileService } from './../services/file';
 
+// Imports models
+import { File } from './../entities/file';
+
 export class FilesRouter {
 
-    public static async create(req: express.Request, res: express.Response) {
+    public static async start(req: express.Request, res: express.Response) {
 
         const fileService: FileService = FilesRouter.getFileService();
 
@@ -23,7 +26,7 @@ export class FilesRouter {
 
         const fileService: FileService = FilesRouter.getFileService();
 
-        await fileService.append(req.get('authorization'), req.body);
+        await fileService.appendSession(req.get('authorization'), req.body);
 
         res.json(true);
     }
@@ -35,6 +38,15 @@ export class FilesRouter {
         await fileService.endSession(req.get('authorization'));
 
         res.json(true);
+    }
+
+    public static async list(req: express.Request, res: express.Response) {
+
+        const fileService: FileService = FilesRouter.getFileService();
+
+        const files: File[] = await fileService.list(req.query.profileId);
+
+        res.json(files);
     }
 
     private static getFileService(): FileService {

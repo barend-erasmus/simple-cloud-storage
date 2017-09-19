@@ -1,7 +1,10 @@
+// Imports Interfaces
+import { IFileRepository } from './../file';
+
 // Imports Models
 import { File } from './../../entities/file';
 
-export class FileRepository {
+export class FileRepository implements IFileRepository {
 
     private files: File[] = [];
 
@@ -30,5 +33,9 @@ export class FileRepository {
         existingFile.createdTimestamp = file.createdTimestamp;
 
         return true;
+    }
+
+    public async list(profileId: string): Promise<File[]> {
+        return this.files.filter((x) => x.profileId === profileId && x.createdTimestamp !== null);
     }
 }

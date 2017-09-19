@@ -22,14 +22,14 @@ export class FileService {
 
         const sessionId: string = crypto.randomBytes(32).toString('hex');
 
-        const file: File = new File(fileName, fileSize, 0, sessionId, profileId, new Date(), null);
+        const file: File = new File(fileName, fileSize, 0, sessionId, profileId, null, null);
 
         await this.fileRepository.create(file);
 
         return sessionId;
     }
 
-    public async append(sessionId: string, buffer: Buffer): Promise<void> {
+    public async appendSession(sessionId: string, buffer: Buffer): Promise<void> {
 
         const file: File = await this.fileRepository.findBySessionId(sessionId);
 
@@ -63,5 +63,9 @@ export class FileService {
         file.createdTimestamp = new Date();
 
         await this.fileRepository.update(file);
+    }
+
+    public async list(profileId: string): Promise<File[]> {
+        return this.fileRepository.list(profileId);
     }
 }

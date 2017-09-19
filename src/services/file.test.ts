@@ -29,7 +29,7 @@ describe('FileService', () => {
             let sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
             const buffer = Buffer.from('Hello World', 'utf8');
-            await fileService.append(sessionId, buffer);
+            await fileService.appendSession(sessionId, buffer);
 
             sessionId = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
@@ -43,7 +43,7 @@ describe('FileService', () => {
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
             const buffer = Buffer.from('Hello World', 'utf8');
-            await fileService.append(sessionId, buffer);
+            await fileService.appendSession(sessionId, buffer);
             await fileService.endSession(sessionId);
 
             try {
@@ -55,7 +55,7 @@ describe('FileService', () => {
         });
     });
 
-    describe('append', () => {
+    describe('appendSession', () => {
         it('should return', async () => {
             const fileRepository: FileRepository = new FileRepository();
             fileService = new FileService(new MemoryGateway(), fileRepository);
@@ -63,7 +63,7 @@ describe('FileService', () => {
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
             const buffer = Buffer.from('Hello World', 'utf8');
-            await fileService.append(sessionId, buffer);
+            await fileService.appendSession(sessionId, buffer);
         });
 
         it('should throw exception given buffer exceeds FileSize', async () => {
@@ -74,7 +74,7 @@ describe('FileService', () => {
 
             try {
                 const buffer = Buffer.from('Hello World, Hello World', 'utf8');
-                await fileService.append(sessionId, buffer);
+                await fileService.appendSession(sessionId, buffer);
 
                 throw new Error('Expected Error');
             } catch (error) {
@@ -89,10 +89,10 @@ describe('FileService', () => {
             const sessionId: string = await fileService.startSession('hello-world.txt', 11, 'profileId');
 
             const buffer = Buffer.from('Hello World', 'utf8');
-            await fileService.append(sessionId, buffer);
+            await fileService.appendSession(sessionId, buffer);
 
             try {
-                await fileService.append(sessionId, buffer);
+                await fileService.appendSession(sessionId, buffer);
 
                 throw new Error('Expected Error');
             } catch (error) {
@@ -106,7 +106,7 @@ describe('FileService', () => {
 
             try {
                 const buffer = Buffer.from('Hello World', 'utf8');
-                await fileService.append('sessionId', buffer);
+                await fileService.appendSession('sessionId', buffer);
 
                 throw new Error('Expected Error');
             } catch (error) {
