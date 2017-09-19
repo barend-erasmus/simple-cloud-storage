@@ -1,8 +1,8 @@
 // Imports
 import * as crypto from 'crypto';
 import * as fs from 'fs-extra';
-import * as Stream from 'stream';
 import * as path from 'path';
+import * as Stream from 'stream';
 import { IGateway } from './gateway';
 
 export class FileSystemGateway implements IGateway {
@@ -37,6 +37,10 @@ export class FileSystemGateway implements IGateway {
         });
     }
 
+    public async getStream(fileName: string): Promise<Stream> {
+        return fs.createReadStream(fileName);
+    }
+
     private async appendFile(fileName: string, offset: number, buffer: Buffer): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             const fileStream = fs.createWriteStream(fileName, {
@@ -50,10 +54,6 @@ export class FileSystemGateway implements IGateway {
                 resolve();
             });
         });
-    }
-
-    public async getStream(fileName: string): Promise<Stream> {
-        return fs.createReadStream(fileName);
     }
 
     private async ensureDirectoryExist(directory: string): Promise<void> {

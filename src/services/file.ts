@@ -1,6 +1,6 @@
 // Imports
-import * as Stream from 'stream';
 import * as crypto from 'crypto';
+import * as Stream from 'stream';
 import { IGateway } from './../gateways/gateway';
 import { IFileRepository } from './../repositories/file';
 
@@ -26,7 +26,7 @@ export class FileService {
 
             await this.fileRepository.update(existingFile);
 
-            await this.gateway.delete(`./storage/${existingFile.profileId}/${existingFile.fileName}`);
+            await this.gateway.delete(this.buildFileNamePath(existingFile));
 
             return existingFile.sessionId;
         }
@@ -56,7 +56,7 @@ export class FileService {
             throw new Error('FileSize Exceeded');
         }
 
-        await this.gateway.append(`./storage/${file.profileId}/${file.fileName}`, file.offset, buffer);
+        await this.gateway.append(this.buildFileNamePath(file), file.offset, buffer);
 
         file.offset += buffer.length;
 
@@ -70,7 +70,7 @@ export class FileService {
             throw new Error('Invalid SessionId');
         }
 
-        file.checksum = await this.gateway.computeHash(`./storage/${file.profileId}/${file.fileName}`);
+        file.checksum = await this.gateway.computeHash(this.buildFileNamePath(file));
         file.createdTimestamp = new Date();
 
         await this.fileRepository.update(file);
@@ -88,6 +88,10 @@ export class FileService {
             throw new Error('File does not exist');
         }
 
-        return this.gateway.getStream(`./storage/${file.profileId}/${file.fileName}`);
+        return this.gateway.getStream(this.buildFileNamePath(file));
+    }
+
+    private buildFileNamePath(file: File): string {
+        return `./storage/${file.profileId}/${file.fileName}`;
     }
 }

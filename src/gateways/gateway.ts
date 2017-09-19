@@ -1,4 +1,4 @@
-// Import 
+// Import
 import * as Stream from 'stream';
 
 export interface IGateway {

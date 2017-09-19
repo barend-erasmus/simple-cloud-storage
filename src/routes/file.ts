@@ -1,7 +1,7 @@
 // Imports
+import * as express from 'express';
 import * as path from 'path';
 import * as Stream from 'stream';
-import * as express from 'express';
 import { FileSystemGateway } from './../gateways/file-system-gateway';
 
 // Imports repositories
