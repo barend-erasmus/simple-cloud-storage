@@ -1,0 +1,12 @@
+{
+    "name": "Simple Cloud Storage",
+    "version": "0.0.1",
+    "description": "",
+    "title": "Simple Cloud Storage",
+    "url" : "https://simple-cloud-storage.openservices.co.za",
+    "sampleUrl": "https://simple-cloud-storage.openservices.co.za",
+    "template": {
+      "withCompare": false,
+      "withGenerator": false
+    }
+  }
