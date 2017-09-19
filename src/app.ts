@@ -1,4 +1,5 @@
 // Imports
+import * as path from 'path';
 import * as express from 'express';
 import * as yargs from 'yargs';
 
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.raw({
     inflate: true,
-    limit: '100kb',
+    limit: '50mb',
     type: 'application/octet-stream',
 }));
 
@@ -30,6 +31,9 @@ app.get('/files/list', FilesRouter.list);
 app.get('/files/download', FilesRouter.download);
 app.get('/files/deleteProfile', FilesRouter.deleteProfile);
 app.get('/files/deleteFile', FilesRouter.deleteFile);
+
+app.use('/api/docs', express.static(path.join(__dirname, './../apidoc')));
+app.use('/api/coverage', express.static(path.join(__dirname, './../coverage/lcov-report')));
 
 app.listen(argv.port || 3000, () => {
     console.log(`listening on port ${argv.port || 3000}`);

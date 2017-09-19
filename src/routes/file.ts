@@ -18,6 +18,16 @@ const argv = yargs.argv;
 
 export class FilesRouter {
 
+    /**
+     * @api {post} /files/start Start File Upload
+     * @apiName FilesStart
+     * @apiGroup Files
+     *
+     * @apiParam {String} fileName Name of File
+     * @apiParam {String} fileSize Size of File
+     * @apiParam {String} profileId Profile Id
+     * 
+     */
     public static async start(req: express.Request, res: express.Response) {
 
         try {
@@ -27,10 +37,21 @@ export class FilesRouter {
 
             res.json(sessionId);
         } catch (err) {
-            res.json(err.message);
+            res.status(400).json(err.message);
         }
     }
 
+    /**
+     * @api {post} /files/append Append File
+     * @apiName FilesAppend
+     * @apiGroup Files
+     *
+     * @apiHeaderExample {json} Header-Example:
+     *      {
+     *          "Authorization": "<session-id>"
+     *      }
+     * 
+     */
     public static async append(req: express.Request, res: express.Response) {
 
         try {
@@ -40,10 +61,21 @@ export class FilesRouter {
 
             res.json(true);
         } catch (err) {
-            res.json(err.message);
+            res.status(400).json(err.message);
         }
     }
 
+    /**
+     * @api {post} /files/finish Finish File Upload
+     * @apiName FilesFinish
+     * @apiGroup Files
+     *
+     * @apiHeaderExample {json} Header-Example:
+     *      {
+     *          "Authorization": "<session-id>"
+     *      }
+     * 
+     */
     public static async finish(req: express.Request, res: express.Response) {
 
         try {
@@ -53,10 +85,18 @@ export class FilesRouter {
 
             res.json(true);
         } catch (err) {
-            res.json(err.message);
+            res.status(400).json(err.message);
         }
     }
 
+    /**
+     * @api {get} /files/list List Files
+     * @apiName FilesList
+     * @apiGroup Files
+     *
+     * @apiParam {String} profileId Profile Id
+     * 
+     */
     public static async list(req: express.Request, res: express.Response) {
 
         try {
@@ -66,10 +106,19 @@ export class FilesRouter {
 
             res.json(files);
         } catch (err) {
-            res.json(err.message);
+            res.status(400).json(err.message);
         }
     }
 
+    /**
+     * @api {get} /files/download Download File
+     * @apiName FilesDownload
+     * @apiGroup Files
+     *
+     * @apiParam {String} fileName Name of File
+     * @apiParam {String} profileId Profile Id
+     * 
+     */
     public static async download(req: express.Request, res: express.Response) {
 
         try {
@@ -80,10 +129,18 @@ export class FilesRouter {
             res.attachment(path.basename(req.query.fileName));
             stream.pipe(res);
         } catch (err) {
-            res.json(err.message);
+            res.status(400).json(err.message);
         }
     }
 
+    /**
+     * @api {get} /files/deleteProfile Delete Profile
+     * @apiName FilesDeleteProfile
+     * @apiGroup Files
+     *
+     * @apiParam {String} profileId Profile Id
+     * 
+     */
     public static async deleteProfile(req: express.Request, res: express.Response) {
 
         try {
@@ -93,10 +150,19 @@ export class FilesRouter {
 
             res.json(true);
         } catch (err) {
-            res.json(err.message);
+            res.status(400).json(err.message);
         }
     }
 
+    /**
+     * @api {get} /files/deletFile Delete File
+     * @apiName FilesDeleteFile
+     * @apiGroup Files
+     *
+     * @apiParam {String} fileName Name of File
+     * @apiParam {String} profileId Profile Id
+     * 
+     */
     public static async deleteFile(req: express.Request, res: express.Response) {
 
         try {
@@ -106,7 +172,7 @@ export class FilesRouter {
 
             res.json(true);
         } catch (err) {
-            res.json(err.message);
+            res.status(400).json(err.message);
         }
     }
 

@@ -92,6 +92,9 @@ export class FileRepository extends BaseRepository implements IFileRepository {
     public async list(profileId: string): Promise<File[]> {
         const files: any[] = await BaseRepository.models.File.findAll({
             where: {
+                createdTimestamp: {
+                    $ne: null
+                },
                 profileId,
             },
         });
